@@ -8,6 +8,7 @@ package br.com.infox.telas;
 import java.sql.*;
 import br.com.infox.dal.ModuloConexao;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author leona
@@ -33,6 +34,8 @@ public class TelaLogin extends javax.swing.JFrame {
             if(rs.next()){
                 TelaPrincipal principal = new TelaPrincipal();
                 principal.setVisible(true);
+                this.dispose();
+                conexao.close();
             }else{
                 JOptionPane.showMessageDialog(null,"usuario e/ou senha invalido(s)");
             }
@@ -40,6 +43,7 @@ public class TelaLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
     /**
      * Creates new form TelaLogin
      */

@@ -18,14 +18,17 @@ senha varchar(15)not null
 describe tbusuario;
 -- a linha abaixo insere dados da tabela (CRUD)
 -- create -> insert 
-insert into tbusuario(iduser, usuario, fone, login, senha) values(1, 'Jose de Assis', 9999-9999, 'JoseAssis', '1234');
+insert into tbusuario(iduser, usuario, fone, login, senha)
+ values(1, 'Jose de Assis', '9999-9999', 'JoseAssis', '1234');
 -- a linha abaixo exibe os dados da tabela(CRUD)
 -- read -> select
 select * from tbusuario;
 
-insert into tbusuario(iduser, usuario, fone, login, senha) values(2, 'Administrador', 9999-9999, 'admin', 'admin');
+insert into tbusuario(iduser, usuario, fone, login, senha)
+ values(2, 'Administrador', '9999-9999', 'admin', 'admin');
 
-insert into tbusuario(iduser, usuario, fone, login, senha) values(3, 'Bill Gates', 9999-9999, 'bill', '1234');
+insert into tbusuario(iduser, usuario, fone, login, senha)
+ values(3, 'Bill Gates', '9999-8888', 'bill', '1234');
 
  -- a linha abaixo modifica dados na tabela (CRUD)
  -- update -> update
@@ -80,3 +83,10 @@ C.nomecli,fonecli
 from tbos as O
 inner join tbclientes as Ctbclientestbos
 on (O.idcli =  C.idcli);
+
+select * from tbusuario;
+select * from tbusuario where login='admin' and senha= 'admin';
+
+select * from tbusuario;
+insert into tbusuario(iduser, usuario, fone, login, senha)
+value(4, 'Leandro Ramos', '9999-9999', 'leandro', 1234);
