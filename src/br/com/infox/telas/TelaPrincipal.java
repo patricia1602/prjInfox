@@ -58,7 +58,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("X - Sistema para controle de OS");
-        setPreferredSize(new java.awt.Dimension(915, 523));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -252,7 +251,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JLabel lblData;
-    private javax.swing.JLabel lblUsuário;
+    public static javax.swing.JLabel lblUsuário;
     private javax.swing.JMenuItem menCadCli;
     private javax.swing.JMenuItem menCadOs;
     // End of variables declaration//GEN-END:variables
