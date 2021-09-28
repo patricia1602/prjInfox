@@ -9,11 +9,12 @@ iduser int primary key,
 usuario varchar(50) not null,
 fone varchar(15),
 login varchar(15) not null unique,
-senha varchar(15)not null 
+senha varchar(15)not null,
+perfil varchar(50)
 );
 
 -- apagar tabela
--- DROP TABLE tbos;
+-- DROP TABLE tbusuario;
 -- o comando abaixo descreve a tabela
 describe tbusuario;
 -- a linha abaixo insere dados da tabela (CRUD)
@@ -36,7 +37,7 @@ insert into tbusuario(iduser, usuario, fone, login, senha)
   
   -- a linha abaixo apaga um registro da tabela(CRUD)
   -- delete -> delete
-  delete from tbusuario where iduser = 3;
+  -- delete from tbusuario where iduser = 3;
   
 select * from tbusuario;
 
@@ -86,7 +87,9 @@ on (O.idcli =  C.idcli);
 
 select * from tbusuario;
 select * from tbusuario where login='admin' and senha= 'admin';
-
+ 
 select * from tbusuario;
 insert into tbusuario(iduser, usuario, fone, login, senha)
 value(4, 'Leandro Ramos', '9999-9999', 'leandro', 1234);
+
+update tbusuario set iduser = 3 where iduser = 4;
