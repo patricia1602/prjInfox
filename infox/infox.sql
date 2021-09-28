@@ -13,7 +13,7 @@ senha varchar(15)not null
 );
 
 -- apagar tabela
- -- DROP TABLE tbusuarios;
+-- DROP TABLE tbos;
 -- o comando abaixo descreve a tabela
 describe tbusuario;
 -- a linha abaixo insere dados da tabela (CRUD)
@@ -60,7 +60,7 @@ use dbinfox;
 create table tbos(
 os int primary key auto_increment,
 data_os timestamp default current_timestamp,
-equipamneto varchar (150) not null,
+equipamento varchar (150) not null,
 defeito varchar (150) not null,
 servico varchar(150),
 tecnico varchar(30),
