@@ -5,27 +5,27 @@
  */
 package br.com.infox.telas;
 
-
 import java.sql.*;
 import br.com.infox.dal.ModuloConexao;
 import javax.swing.JOptionPane;
 
 public class TelaUsuario extends javax.swing.JInternalFrame {
-     //usando a variavel conexão do DAL
+    //usando a variavel conexão do DAL
+
     Connection conexao = null;
     //criando variaveis especiais para conaxão do banco
     //Prepared statement e ResultSet são framworks do pacote java.sql
     //e servem para preparar e executar as instruções SQL
     PreparedStatement pst = null;
     ResultSet rs = null;
-   
+
     public TelaUsuario() {
         initComponents();
         conexao = ModuloConexao.conector();
     }
-    
+
     //metodo para consultar usuarios
-    private void consultar(){
+    private void consultar() {
         String sql = "select * from tbusuario where iduser=?";
         try {
             pst = conexao.prepareStatement(sql);
@@ -38,14 +38,13 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 txtUsuSenha.setText(rs.getString(5));
                 //a linha abaixo se refere ao combobox
                 cboUsuPerfil.setSelectedItem(rs.getString(6));
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Usuario nao cadastrado");
                 // as linhas abaixo "limpam" os campos
                 txtUsuNome.setText(null);
                 txtUsuFone.setText(null);
                 txtUsuLogin.setText(null);
                 txtUsuSenha.setText(null);
-                cboUsuPerfil.setSelectedItem(null);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -53,25 +52,41 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     }
 
     //metodo para adicionar usuario
-    private void adicionar(){
+    private void adicionar() {
         String sql = "insert into tbusuario (iduser,usuario,fone,login,senha,perfil) values(?,?,?,?,?,?)";
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setString(1,txtUSuId.getText());
-            pst.setString(2,txtUsuNome.getText());
-            pst.setString(3,txtUsuFone.getText());
-            pst.setString(4,txtUsuLogin.getText());
-            pst.setString(5,txtUsuSenha.getText());
-            pst.setString(6,cboUsuPerfil.getSelectedItem().toString());
-            //a linha abaixo atualiza a tabela usuario com os dados do formulario
-            //a estrutura baixo é usada para confimar a inserçao da tabela
-            int adicionado = pst.executeUpdate();
-            if(adicionado > 0){
-                JOptionPane.showMessageDialog(null, "Usuario adicionado com sucesso");
+            pst.setString(1, txtUSuId.getText());
+            pst.setString(2, txtUsuNome.getText());
+            pst.setString(3, txtUsuFone.getText());
+            pst.setString(4, txtUsuLogin.getText());
+            pst.setString(5, txtUsuSenha.getText());
+            pst.setString(6, cboUsuPerfil.getSelectedItem().toString());
+            // validaçao dos campos obrigatorios
+            if (txtUSuId.getText().isEmpty()
+                    || (txtUsuNome.getText().isEmpty())
+                    || (txtUsuLogin.getText().isEmpty())
+                    || (txtUsuSenha.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatorios");
+
+            } else {
+
+                //a linha abaixo atualiza a tabela usuario com os dados do formulario
+                //a estrutura baixo é usada para confimar a inserçao dos dados da tabela
+                int adicionado = pst.executeUpdate();
+                //a tela abaixo serve de apoio ao entendimento da logica
+                //System.out.println(adicionado);
+                if (adicionado > 0) {
+                    JOptionPane.showMessageDialog(null, "Usuario adicionado com sucesso");
+                    txtUSuId.setText(null);
+                    txtUsuNome.setText(null);
+                    txtUsuFone.setText(null);
+                    txtUsuLogin.setText(null);
+                    txtUsuSenha.setText(null);
+                }
             }
-            
         } catch (Exception e) {
-           JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
 
         }
     }
@@ -101,6 +116,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         btnUsuDelete = new javax.swing.JButton();
         btnUsuUpdate = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -109,15 +125,15 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         setToolTipText("");
         setPreferredSize(new java.awt.Dimension(640, 480));
 
-        jLabel1.setText("id");
+        jLabel1.setText("*id");
 
-        jLabel2.setText("Nome");
+        jLabel2.setText("*Nome");
 
-        jLabel4.setText("Login");
+        jLabel4.setText("*Login");
 
-        jLabel5.setText("Senha");
+        jLabel5.setText("*Senha");
 
-        jLabel6.setText("Perfil");
+        jLabel6.setText("*Perfil");
 
         txtUSuId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +185,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Fone");
 
+        jLabel7.setText("*Campos obigatorios");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,7 +201,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtUsuNome, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUSuId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtUSuId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -196,7 +215,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                                     .addComponent(txtUsuSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnUsuCreate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                                 .addComponent(btnUsuRead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -212,10 +231,13 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                                         .addComponent(txtUsuLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnUsuUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
-                                .addComponent(btnUsuDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(163, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(btnUsuUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(45, 45, 45)
+                                        .addComponent(btnUsuDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))))))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +245,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtUSuId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUSuId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -292,6 +315,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField txtUSuId;
     private javax.swing.JTextField txtUsuFone;
     private javax.swing.JTextField txtUsuLogin;

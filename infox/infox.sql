@@ -110,3 +110,4 @@ update tbusuario set perfil = 'user' where iduser =3;
 use dbinfox;
 describe tbusuario;
 select * from tbusuario;
+
