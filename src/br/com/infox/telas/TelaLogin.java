@@ -47,14 +47,14 @@ public class TelaLogin extends javax.swing.JFrame {
                 principal.setVisible(true);
                 TelaPrincipal.MenRel.setEnabled(true);
                 TelaPrincipal.MenCadUsu.setEnabled(true);
-                TelaPrincipal.lblUsuário.setText(rs.getString(2));
-                TelaPrincipal.lblUsuário.setForeground(Color.red);
+                TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                TelaPrincipal.lblUsuario.setForeground(Color.red);
                 
                this.dispose();
                }else{
                   TelaPrincipal principal = new TelaPrincipal();
                   principal.setVisible(true);
-                  TelaPrincipal.lblUsuário.setText(rs.getString(2));
+                  TelaPrincipal.lblUsuario.setText(rs.getString(2));
                   this.dispose();
                }
             }else{

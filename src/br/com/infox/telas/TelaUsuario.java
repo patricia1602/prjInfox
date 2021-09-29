@@ -5,10 +5,6 @@
  */
 package br.com.infox.telas;
 
-/**
- *Aula 13
- * @author leona
- */
 
 import java.sql.*;
 import br.com.infox.dal.ModuloConexao;
@@ -28,6 +24,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         conexao = ModuloConexao.conector();
     }
     
+    //metodo para consultar usuarios
     private void consultar(){
         String sql = "select * from tbusuario where iduser=?";
         try {
@@ -39,7 +36,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 txtUsuFone.setText(rs.getString(3));
                 txtUsuLogin.setText(rs.getString(4));
                 txtUsuSenha.setText(rs.getString(5));
-                //a linha abixo se refere ao combobox
+                //a linha abaixo se refere ao combobox
                 cboUsuPerfil.setSelectedItem(rs.getString(6));
             }else{
                 JOptionPane.showMessageDialog(null, "Usuario nao cadastrado");
@@ -54,7 +51,30 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-          
+
+    //metodo para adicionar usuario
+    private void adicionar(){
+        String sql = "insert into tbusuario (iduser,usuario,fone,login,senha,perfil) values(?,?,?,?,?,?)";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1,txtUSuId.getText());
+            pst.setString(2,txtUsuNome.getText());
+            pst.setString(3,txtUsuFone.getText());
+            pst.setString(4,txtUsuLogin.getText());
+            pst.setString(5,txtUsuSenha.getText());
+            pst.setString(6,cboUsuPerfil.getSelectedItem().toString());
+            //a linha abaixo atualiza a tabela usuario com os dados do formulario
+            //a estrutura baixo é usada para confimar a inserçao da tabela
+            int adicionado = pst.executeUpdate();
+            if(adicionado > 0){
+                JOptionPane.showMessageDialog(null, "Usuario adicionado com sucesso");
+            }
+            
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, e);
+
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,6 +119,18 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Perfil");
 
+        txtUSuId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUSuIdActionPerformed(evt);
+            }
+        });
+
+        txtUsuLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuLoginActionPerformed(evt);
+            }
+        });
+
         txtUsuSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsuSenhaActionPerformed(evt);
@@ -111,6 +143,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         btnUsuCreate.setToolTipText("Adicionar");
         btnUsuCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUsuCreate.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnUsuCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuCreateActionPerformed(evt);
+            }
+        });
 
         btnUsuRead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/read.png"))); // NOI18N
         btnUsuRead.setToolTipText("Consultar");
@@ -228,6 +265,19 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         // chamando o metodo consultar
         consultar();
     }//GEN-LAST:event_btnUsuReadActionPerformed
+
+    private void txtUsuLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuLoginActionPerformed
+
+    private void txtUSuIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUSuIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUSuIdActionPerformed
+
+    private void btnUsuCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuCreateActionPerformed
+        //chamando o metodo adicionar
+        adicionar();
+    }//GEN-LAST:event_btnUsuCreateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

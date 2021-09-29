@@ -92,4 +92,21 @@ select * from tbusuario;
 insert into tbusuario(iduser, usuario, fone, login, senha)
 value(4, 'Leandro Ramos', '9999-9999', 'leandro', 1234);
 
-update tbusuario set iduser = 3 where iduser = 4;
+update tbusuario set iduser = 3 where iduser = 2; 
+
+
+use dbinfox;
+describe tbusuario;
+select * from tbusuario;
+-- a linha abaixo adiciona um campo a tabela
+alter table tbusuario add column perfil varchar (20) not null;
+-- a linha baixo remove um campo da tabela
+alter table tbusuario drop column perfil;
+
+update tbusuario set perfil = 'admin' where iduser =1;
+update tbusuario set perfil = 'admin' where iduser =2;
+update tbusuario set perfil = 'user' where iduser =3;
+
+use dbinfox;
+describe tbusuario;
+select * from tbusuario;
