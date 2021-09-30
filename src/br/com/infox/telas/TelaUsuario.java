@@ -90,6 +90,69 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         }
     }
+    //criando metodo para alterar dados do usuario
+
+    private void alterar() {
+        String sql = "update tbusuario set usuario=?, fone=?, login=?, senha=?, perfil=? where iduser =?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtUsuNome.getText());
+            pst.setString(2, txtUsuFone.getText());
+            pst.setString(3, txtUsuLogin.getText());
+            pst.setString(4, txtUsuSenha.getText());
+            pst.setString(5, cboUsuPerfil.getSelectedItem().toString());
+            pst.setString(6, txtUSuId.getText());
+
+            if (txtUSuId.getText().isEmpty()
+                    || (txtUsuNome.getText().isEmpty())
+                    || (txtUsuLogin.getText().isEmpty())
+                    || (txtUsuSenha.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatorios");
+
+            } else {
+
+                //a linha abaixo atualiza a tabela usuario com os dados do formulario
+                //a estrutura baixo é usada para confirmar alteraçao dos dados da tabela
+                int adicionado = pst.executeUpdate();
+                //a tela abaixo serve de apoio ao entendimento da logica
+                //System.out.println(adicionado);
+                if (adicionado > 0) {
+                    JOptionPane.showMessageDialog(null, "Dados do usurario alterado com sucesso");
+                    txtUSuId.setText(null);
+                    txtUsuNome.setText(null);
+                    txtUsuFone.setText(null);
+                    txtUsuLogin.setText(null);
+                    txtUsuSenha.setText(null);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    //metodo responsavel pela remoçao do usuarios
+    private void remover() {
+        //a estrutura abaixo confirma a remoçao do usuario
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover este usuario", "Atençao", JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_OPTION) {
+            String sql = "delete from tbusuario where iduser =?";
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, txtUSuId.getText());
+                int apagado = pst.executeUpdate();
+                if (apagado > 0) {
+                    JOptionPane.showMessageDialog(null, "Usuario removido com sucesso");
+                    txtUSuId.setText(null);
+                    txtUsuNome.setText(null);
+                    txtUsuFone.setText(null);
+                    txtUsuLogin.setText(null);
+                    txtUsuSenha.setText(null);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -178,10 +241,20 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         btnUsuDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/delete.png"))); // NOI18N
         btnUsuDelete.setToolTipText("Remover");
         btnUsuDelete.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnUsuDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuDeleteActionPerformed(evt);
+            }
+        });
 
         btnUsuUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/update.png"))); // NOI18N
         btnUsuUpdate.setToolTipText("Alterar");
         btnUsuUpdate.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnUsuUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuUpdateActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Fone");
 
@@ -301,6 +374,16 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         //chamando o metodo adicionar
         adicionar();
     }//GEN-LAST:event_btnUsuCreateActionPerformed
+
+    private void btnUsuUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuUpdateActionPerformed
+        //chamando o metodo alterar
+        alterar();
+    }//GEN-LAST:event_btnUsuUpdateActionPerformed
+
+    private void btnUsuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuDeleteActionPerformed
+        //chamndo o metodo remove
+        remover();
+    }//GEN-LAST:event_btnUsuDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
