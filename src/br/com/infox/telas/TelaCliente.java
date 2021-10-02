@@ -65,8 +65,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
         }
     }
-    //metodo para pesquisar clientes pelo nome com filtro
 
+    //metodo para pesquisar clientes pelo nome com filtro
     private void pesquisar_cliente() {
 
         String sql = "Select * from tbclientes where nomecli like ?";
@@ -78,7 +78,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             rs = pst.executeQuery();
             //a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela
             tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
-            System.out.println("2 Pesquisando...");
+           
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -196,7 +196,18 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         btnRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRemover.setPreferredSize(new java.awt.Dimension(80, 80));
 
+        txtCliPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCliPesquisaKeyReleased(evt);
+            }
+        });
+
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/Lupa.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -209,6 +220,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
+            }
+        });
         tblClientes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tblClientesKeyReleased(evt);
@@ -316,16 +332,27 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         adicionar();
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
-    //o evento abaixo é do tipo "enquanto for digitando"
     private void tblClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblClientesKeyReleased
-        // chamar o metodo pesquisar cliente
-        pesquisar_cliente();
-
+       
     }//GEN-LAST:event_tblClientesKeyReleased
 
     private void txtCliIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCliIdActionPerformed
-
+      
     }//GEN-LAST:event_txtCliIdActionPerformed
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6MouseClicked
+     //o evento abaixo é do tipo "enquanto for digitando"
+    private void txtCliPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCliPesquisaKeyReleased
+       //chamar o metodo pesquisar clientes
+        pesquisar_cliente();
+    }//GEN-LAST:event_txtCliPesquisaKeyReleased
+    //evento que sera usado para setar os camposda tabela (clicando com o mousse)
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+        //chamando o metodo para setar os campos
+        setar_campos();
+    }//GEN-LAST:event_tblClientesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
