@@ -118,3 +118,9 @@ describe tbclientes;
 select * from tbclientes;
 select * from tbclientes where nomecli like 'jo%';
 
+use dbinfox;
+describe tbclientes;
+select * from tbclientes;
+
+
+

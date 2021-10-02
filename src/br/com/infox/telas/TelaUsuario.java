@@ -90,6 +90,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         }
     }
+    
     //criando metodo para alterar dados do usuario
 
     private void alterar() {
