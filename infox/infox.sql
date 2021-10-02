@@ -111,3 +111,10 @@ use dbinfox;
 describe tbusuario;
 select * from tbusuario;
 
+use dbinfox;
+select * from tbclientes;
+describe tbclientes;
+
+select * from tbclientes;
+select * from tbclientes where nomecli like 'jo%';
+

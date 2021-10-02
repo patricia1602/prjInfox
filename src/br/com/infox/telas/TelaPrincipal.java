@@ -93,6 +93,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         menCadCli.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
         menCadCli.setText("Cliente");
+        menCadCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menCadCliActionPerformed(evt);
+            }
+        });
         MemCad.add(menCadCli);
 
         menCadOs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
@@ -218,6 +223,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void MemCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MemCadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MemCadActionPerformed
+
+    private void menCadCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menCadCliActionPerformed
+        // chamando a TelaCliente
+        TelaCliente cliente = new TelaCliente();
+        cliente.setVisible(true);
+        Desktop.add(cliente);
+        
+    }//GEN-LAST:event_menCadCliActionPerformed
 
     /**
      * @param args the command line arguments
