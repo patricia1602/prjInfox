@@ -94,18 +94,19 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         txtCliFone.setText(tblClientes.getModel().getValueAt(setar, 3).toString());
         txtClieEmail.setText(tblClientes.getModel().getValueAt(setar, 4).toString());
 
+    //metodo para setar os campos do formulario com o conteudo da tabela
+    btnAdicionar.setEnabled(false);
     }
-
     //criando metodo para alterar dados do usuario
     private void alterar() {
-        String sql = "update tbclientes set nomecli=?, endcli=?, fonecli=?, emailcli=? where nomecli=?";
+        String sql = "update tbclientes set nomecli=?, endcli=?, fonecli=?, emailcli=? where idcli=?";
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtCliNome.getText());
             pst.setString(2, txtCliEndereco.getText());
             pst.setString(3, txtCliFone.getText());
             pst.setString(4, txtClieEmail.getText());
-            pst.setString(5, txtCliNome.getText());
+            pst.setString(5, txtCliId.getText());
             if (txtCliNome.getText().isEmpty()
                     || (txtCliFone.getText().isEmpty())) {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatorios");
@@ -123,6 +124,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                     txtCliEndereco.setText(null);
                     txtCliFone.setText(null);
                     txtClieEmail.setText(null);
+                    btnAdicionar.setEnabled(true);
 
                 }
             }
@@ -131,6 +133,29 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         }
     }
 
+         //metodo responsavel pela remoçao do clientes
+    private void remover() {
+        //a estrutura abaixo confirma a remoçao do cliente
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover este cliente", "Atençao", JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_OPTION) {
+            String sql = "delete from tbclientes where idcli =?";
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, txtCliId.getText());
+                int apagado = pst.executeUpdate();
+                if (apagado > 0) {
+                    JOptionPane.showMessageDialog(null, "Cliente removido com sucesso");
+                    txtCliNome.setText(null);
+                    txtCliEndereco.setText(null);
+                    txtCliFone.setText(null);
+                    txtClieEmail.setText(null);
+                    btnAdicionar.setEnabled(true);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -176,6 +201,12 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
         jLabel5.setText("*Campos Obrigatorios");
 
+        txtClieEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtClieEmailActionPerformed(evt);
+            }
+        });
+
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/create.png"))); // NOI18N
         btnAdicionar.setToolTipText("Adicionar");
         btnAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -190,11 +221,21 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         btnAlterar.setToolTipText("Alterar");
         btnAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAlterar.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/delete.png"))); // NOI18N
         btnRemover.setToolTipText("Apagar");
         btnRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRemover.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         txtCliPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -353,6 +394,20 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         //chamando o metodo para setar os campos
         setar_campos();
     }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void txtClieEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClieEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtClieEmailActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // chamndo o metodo para alterar clientes
+        alterar();
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        //chamando o metodo para remover cliente
+        remover();
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
