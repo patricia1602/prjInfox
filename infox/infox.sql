@@ -122,5 +122,8 @@ use dbinfox;
 describe tbclientes;
 select * from tbclientes;
 
+use dbinfox;
+describe tbos;
+select * from tbos;
 
 
