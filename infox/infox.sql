@@ -126,4 +126,8 @@ use dbinfox;
 describe tbos;
 select * from tbos;
 
-
+use dbinfox;
+select * from tbclientes;
+select idcli, nomecli,fonecli from tbclientes where nomecli like 'jo%';
+-- a linha abaixo cria um apelido aos campos da tabela
+select idcli as Id, nomecli as Nome, fonecli as Fone from tbclientes where nomecli like 'jo%';
