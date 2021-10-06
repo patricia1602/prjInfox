@@ -131,3 +131,10 @@ select * from tbclientes;
 select idcli, nomecli,fonecli from tbclientes where nomecli like 'jo%';
 -- a linha abaixo cria um apelido aos campos da tabela
 select idcli as Id, nomecli as Nome, fonecli as Fone from tbclientes where nomecli like 'jo%';
+
+use dbinfox;
+describe tbos;
+-- a linha abaixo altera a tabela adicionando um campo em uma determinada posiçao
+alter table tbos add tipo varchar (15) not null after data_os;
+alter table tbos add situaçao varchar (20) not null after tipo; 
+describe tbos;

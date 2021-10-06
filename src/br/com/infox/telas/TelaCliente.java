@@ -82,7 +82,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-        System.out.println("3 Pesquisando...");
     }
 
     //metodo para setar os campos do formulariocom o conteudo da tabela
