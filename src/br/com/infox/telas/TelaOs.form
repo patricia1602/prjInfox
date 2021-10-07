@@ -300,7 +300,7 @@
             <StringItem index="0" value="Na bancada"/>
             <StringItem index="1" value="Entrega Ok"/>
             <StringItem index="2" value="Or&#xe7;amento REPROVADO"/>
-            <StringItem index="3" value="Aguardando aprova&#xe7;&#xe3;o"/>
+            <StringItem index="3" value="Aguardando APROVA&#xc7;&#xc3;O"/>
             <StringItem index="4" value="Aguardando pe&#xe7;as"/>
             <StringItem index="5" value="Abandonado pelo cliente"/>
             <StringItem index="6" value="Retornou"/>
@@ -331,7 +331,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" pref="26" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="txtCliId" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="txtIdCli" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
@@ -349,7 +349,7 @@
                       <Component id="txtCliPesquisar" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" max="32767" attributes="0"/>
-                          <Component id="txtCliId" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIdCli" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -376,7 +376,10 @@
             <Property name="text" type="java.lang.String" value="*Id"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtCliId">
+        <Component class="javax.swing.JTextField" name="txtIdCli">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdCliActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
@@ -440,6 +443,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtOsValor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>

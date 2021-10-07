@@ -20,9 +20,10 @@ public class TelaOs extends javax.swing.JInternalFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
 
-    //a lionha abaixo cria uma variavelpara armazenar um texto de acordo com 
+    //a linha abaixo cria uma variavel para armazenar um texto de acordo com 
     //o radion button selecionado
     private String tipo;
+
     /**
      * Creates new form TelaOs
      */
@@ -34,61 +35,60 @@ public class TelaOs extends javax.swing.JInternalFrame {
 
     private void pesquisar_cliente() {
         String sql = "select idcli as Id, nomecli as Nome, fonecli as Fone from tbclientes where nomecli like ?";
-       
+
         try {
             pst = conexao.prepareStatement(sql);
-             pst.setString(1, txtCliPesquisar.getText()+ "%");
-             rs = pst.executeQuery();
-             tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
-             
+            pst.setString(1, txtCliPesquisar.getText() + "%");
+            rs = pst.executeQuery();
+            tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
+
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
         }
     }
-    
-        private void setar_campos(){
-            int setar = tblClientes.getSelectedRow();
-            txtCliId.setText(tblClientes.getModel().getValueAt(setar,0).toString());
-        }
-        
-        //metodo para cadastrar OS
-        private void emitir_os(){
-            String sql = "insert into tbos(tipo, situacao, equipamento, defeito,"
-                    + " servico, tecnico, valor, idicli) values(?,?,?,?,?,?,?,?))";
-            try {
-                pst = conexao.prepareStatement(sql);
-                pst.setString(1, tipo);
-                pst.setString(2, cboOsSit.getSelectedItem().toString());
-                pst.setString(3, txtOsEqui.getText());
-                pst.setString(4, txtOsDef.getText());
-                pst.setString(5, txtOsServ.getText());
-                pst.setString(6, txtOsTec.getText());
-                pst.setString(7, txtOsValor.getText());
-                pst.setString(8, txtCliId.getText());
-                
-                //validaçao dos campos obrigatorios
-                if ((txtCliId.getText().isEmpty()||txtOsEqui.getText().isEmpty()
-                   ||txtOsDef.getText().isEmpty())){
-                    JOptionPane.showMessageDialog(null, "Prencha todos os campos obrigatórios");
-                } else {
-                    int adicionado = pst.executeUpdate();
-                    if(adicionado > 0){
-                        JOptionPane.showMessageDialog(null, "OS emitida com sucesso");
-                        
-                        txtCliId.setText(null);
-                        txtOsEqui.setText(null);
-                        txtOsDef.setText(null);
-                        txtOsServ.setText(null);
-                        txtOsValor.setText(null);
-                        
 
-                    }
+    private void setar_campos() {
+        int setar = tblClientes.getSelectedRow();
+        txtIdCli.setText(tblClientes.getModel().getValueAt(setar, 0).toString());
+    }
+
+    //metodo para cadastrar OS
+    private void emitir_os() {
+        String sql = " insert into tbos(tipo, situacao, equipamento, defeito, servico, tecnico, valor, idcli) values(?,?,?,?,?,?,?,?)";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, tipo);
+            pst.setString(2, cboOsSit.getSelectedItem().toString());
+            pst.setString(3, txtOsEqui.getText());
+            pst.setString(4, txtOsDef.getText());
+            pst.setString(5, txtOsServ.getText());
+            pst.setString(6, txtOsTec.getText());
+            //.resplace substitui a virgula pelo ponto
+            pst.setString(7, txtOsValor.getText().replace(",", "."));
+            pst.setString(8, txtIdCli.getText());
+
+            //validaçao dos campos obrigatorios
+            if ((txtIdCli.getText().isEmpty() || txtOsEqui.getText().isEmpty()
+                    || txtOsDef.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios");
+            } else {
+                int adicionado = pst.executeUpdate();
+                if (adicionado > 0) {
+                    JOptionPane.showMessageDialog(null, "OS emitida com sucesso");
+
+                    txtIdCli.setText(null);
+                    txtOsEqui.setText(null);
+                    txtOsDef.setText(null);
+                    txtOsServ.setText(null);
+                    txtOsTec.setText(null);
+                    txtOsValor.setText(null);
                 }
-            } catch (Exception e) {
-                JOptionPane.showConfirmDialog(null, e);
             }
-            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
         }
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,7 +114,7 @@ public class TelaOs extends javax.swing.JInternalFrame {
         txtCliPesquisar = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtCliId = new javax.swing.JTextField();
+        txtIdCli = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
@@ -223,7 +223,7 @@ public class TelaOs extends javax.swing.JInternalFrame {
 
         lblSitu.setText("Situação");
 
-        cboOsSit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Na bancada", "Entrega Ok", "Orçamento REPROVADO", "Aguardando aprovação", "Aguardando peças", "Abandonado pelo cliente", "Retornou" }));
+        cboOsSit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Na bancada", "Entrega Ok", "Orçamento REPROVADO", "Aguardando APROVAÇÃO", "Aguardando peças", "Abandonado pelo cliente", "Retornou" }));
 
         txtClientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
 
@@ -236,6 +236,12 @@ public class TelaOs extends javax.swing.JInternalFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/Lupa.png"))); // NOI18N
 
         jLabel6.setText("*Id");
+
+        txtIdCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdCliActionPerformed(evt);
+            }
+        });
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -267,7 +273,7 @@ public class TelaOs extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCliId, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtIdCli, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(txtClientesLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,7 +288,7 @@ public class TelaOs extends javax.swing.JInternalFrame {
                     .addComponent(txtCliPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(txtClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCliId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtIdCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -302,6 +308,8 @@ public class TelaOs extends javax.swing.JInternalFrame {
         jLabel10.setText("Técnico");
 
         jLabel11.setText("Valor Total");
+
+        txtOsValor.setText("0");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/Impressora.png"))); // NOI18N
         jButton1.setToolTipText("Imprimir OS");
@@ -489,12 +497,16 @@ public class TelaOs extends javax.swing.JInternalFrame {
 
     private void btnOsAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsAdicionarActionPerformed
         //chamar o metodo emitir Os
-       emitir_os();
+        emitir_os();
     }//GEN-LAST:event_btnOsAdicionarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtIdCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdCliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdCliActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -523,9 +535,9 @@ public class TelaOs extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbtOrc;
     private javax.swing.JRadioButton rbtOs;
     private javax.swing.JTable tblClientes;
-    private javax.swing.JTextField txtCliId;
     private javax.swing.JTextField txtCliPesquisar;
     private javax.swing.JPanel txtClientes;
+    private javax.swing.JTextField txtIdCli;
     private javax.swing.JTextField txtOsDef;
     private javax.swing.JTextField txtOsEqui;
     private javax.swing.JTextField txtOsServ;
