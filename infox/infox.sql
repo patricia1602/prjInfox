@@ -146,4 +146,10 @@ alter table tbos add situacao varchar (20) not null after tipo;
 use dbinfox;
 describe tbos;
 select * from tbos; 
+
+use dbinfox;
+select * from tbclientes;
+-- a instruçao abaixo seleciona e ordena por nome todos os clientes cadastrados
+select * from tbclientes order by nomecli;
+
  
